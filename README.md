@@ -2,7 +2,7 @@
 
 ### Men
 
-![Men Height by Position](figures/men_Height (cm)_by_position.png)
+![Men Height by Position](figures/men_Height_(cm)_by_position.png)
 
 ![Men Height vs Awards](figures/men_Height_vs_Awards.png)
 
@@ -12,13 +12,13 @@
 
 ![Men Spike vs Ranking](figures/men_Spike_vs_Ranking.png)
 
-![Men Weight by Position](figures/men_Weight (kg)_by_position.png)
+![Men Weight by Position](figures/men_Weight_(kg)_by_position.png)
 
 ![Men Weight vs Spike](figures/men_Weight_vs_Spike.png)
 
 ### Women
 
-![Women Height by Position](figures/women_Height (cm)_by_position.png)
+![Women Height by Position](figures/women_Height_(cm)_by_position.png)
 
 ![Women Height vs Awards](figures/women_Height_vs_Awards.png)
 
@@ -28,12 +28,12 @@
 
 ![Women Spike vs Ranking](figures/women_Spike_vs_Ranking.png)
 
-![Women Weight by Position](figures/women_Weight (kg)_by_position.png)
+![Women Weight by Position](figures/women_Weight_(kg)_by_position.png)
 
 ![Women Weight vs Spike](figures/women_Weight_vs_Spike.png)
 
 ### General
 
-![Height by Position](figures/Height (cm)_by_position.png)
+![Height by Position](figures/Height_(cm)_by_position.png)
 
-![Weight by Position](figures/Weight (kg)_by_position.png)
+![Weight by Position](figures/Weight_(kg)_by_position.png)
