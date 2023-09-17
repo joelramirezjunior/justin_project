@@ -4,9 +4,10 @@
 
 
 # Analysis Summary
-In both men and women, the positions Libero and Middle-Blocker where the most statisticly significant in difference when comparing their samples means for **Weight (CM)** and **Height (CM)** respectively. When comparing Men and Women Liberos with Middleblockers with respect to Weight, results showed a p-value of *3.8948492482892944e-1* and *3.362807261918677e-20* respectively. For Height, results showed *9.89363585932589e-37* and *1.6045192556817484e-37 *respectively. This shows that these two position require different physical needs at a foundatinal level, and technique does not seem to outway the importance of height and weight when evaluated effectiveness between these two positions.
+In both men and women, the positions Libero and Middle-Blocker where the most statisticly significant in difference when comparing their samples means for **Weight (CM)** and **Height (CM)** respectively. When comparing Men and Women Liberos with Middleblockers with respect to Weight, results showed a p-value of *3.8948492482892944e-1* and *3.362807261918677e-20* respectively. For Height, results showed *9.89363585932589e-37* and *1.6045192556817484e-37* respectively. This shows that these two position require different physical needs at a foundatinal level, and technique does not seem to outway the importance of height and weight when evaluated effectiveness between these two positions.
 
 
+However, there were two positions that seemed to overlap. Opposite and Middle-Blocker overlapped the most with respect to Weight for both Men and Women. Their P-Values for Weight in Men were 0.749103028976096 and in women 0.10754711854619492. For height however, these values different the most. For Men we found a significant different with p-value of 0.0012572350345596392 and in women there was no significant different at a p-value of 0.39357374537986.
 
 # Statistics
 
