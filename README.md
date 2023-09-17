@@ -26,18 +26,16 @@ Pearson Correlation Coefficients with 'Ranking':
 
 Coefficient of Determination (R^2) with 'Ranking':
 
-Weight (kg)    0.000439
-Height (cm)    0.000748
-Spike (cm)     0.009443
-Block (cm)     0.000477
-Points         0.742763
-Awards         0.297727
-Matches        0.063605
-Tournaments    0.267642
-Position       0.000519
-Name: Ranking, dtype: float64
+- Weight (kg)    0.000439
+- Height (cm)    0.000748
+- Spike (cm)     0.009443
+- Block (cm)     0.000477
+- Points         0.742763
+- Awards         0.297727
+- Matches        0.063605
+- Tournaments    0.267642
+- Position       0.000519
 
---------------------------------------------------
 
 T-test for 2 vs 1 - Height (cm):
 T-statistic: 4.97299655917408, P-value: 1.8746142113377633e-06
