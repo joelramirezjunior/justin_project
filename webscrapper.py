@@ -1,3 +1,4 @@
+import argparse
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -5,40 +6,51 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from bs4 import BeautifulSoup
 import requests
+import csv
 
-# URL = "https://women.volleybox.net/players/ranking"
-URL = "https://volleybox.net/players/ranking" #MEN
-# Set up the browser
-driver = webdriver.Chrome()
 
-driver.get(URL)
+# Global variable for Men's URL
+URL_MEN = "https://volleybox.net/players/ranking"
 
-# Track the number of spans found so far to decide when to stop scrolling
-num_spans_before = 0
+# Global variable for Women's URL
+URL_WOMEN = "https://women.volleybox.net/players/ranking"
 
-while True:
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(5)
-    spans = driver.find_elements(By.CSS_SELECTOR,'span.title')
-    if len(spans) == num_spans_before:
-        break
-    num_spans_before = len(spans)
 
-# Extract text from all spans for player names and points
-names = [span.text for span in driver.find_elements(By.CSS_SELECTOR,'span.title')]
-points = [span.text for span in driver.find_elements(By.CSS_SELECTOR,'span.bolded-points')]
+# Initialize browser
+def init_browser(URL):
+    print("Initializing webdriver")
+    driver = webdriver.Chrome()
+    driver.get(URL)
+    return driver
 
-total_names = len(names)
+# Scroll to the end of page until no new spans are found
+def scroll_to_end_of_page(driver):
+    print("Grabbing spans")
+    num_spans_before = 0
 
-driver.quit()
-players_data = {}
-for idx, name in enumerate(names):
-    print("Currently processing: ", idx,  "/", total_names)
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    
+    while True:
+        # Scroll down in steps
+        for _ in range(0, last_height + 100, 100):  # Here, 100 is the step size
+            driver.execute_script("window.scrollBy(0, 100);")
+            time.sleep(0.1)  # Adjust this delay for smoother scrolling
+        
+        # Check the new scroll height after the above scrolling
+        new_height = driver.execute_script("return document.body.scrollHeight")
+
+        spans = driver.find_elements(By.CSS_SELECTOR,'span.title')
+        if len(spans) == num_spans_before or num_spans_before >= 400:
+            break
+        num_spans_before = len(spans)
+
+# Extract player details from a given URL
+def extract_player_data(name, points, idx):
+    player_data = {}
     query = name + " volleybox"
     google_url = f"https://www.google.com/search?q={query}"
     response = requests.get(google_url)
     soup = BeautifulSoup(response.content, 'lxml')
-
     results = soup.find_all('a', href=True)
     first_result_url = None
     for result in results:
@@ -117,31 +129,53 @@ for idx, name in enumerate(names):
             # Add the points data
             player_data['Points'] = points[idx].split(" ")[0]
             
-            # Storing the player's information in the main dictionary
-            players_data[name] = player_data
         except requests.exceptions.ConnectionError:
                 print("A connection error occurred. Skipping...")
-                break
 
-# Saving data to CSV
-import csv
+    return player_data
 
-# Determine the CSV header based on all available keys
-headers = set()
-for player, data in players_data.items():
-    headers.update(data.keys())
-headers = ["Name"] + list(headers)
+# Save data to CSV file
+def save_to_csv(players_data):
+    headers = set()
+    for player, data in players_data.items():
+        headers.update(data.keys())
+    headers = ["Name"] + list(headers)
 
-with open('players_data.csv', 'w', newline='', encoding='utf-8') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=headers)
-    writer.writeheader()
+    with open('./data/players_data.csv', 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=headers)
+        writer.writeheader()
 
-    for name, data in players_data.items():
-        data["Name"] = name
-        writer.writerow(data)
-
-print("Data saved to players_data.csv")
+        for name, data in players_data.items():
+            data["Name"] = name
+            writer.writerow(data)
 
 
+def main(url):
+    driver = init_browser(url)
+    scroll_to_end_of_page(driver)
 
+    names = [span.text for span in driver.find_elements(By.CSS_SELECTOR, 'span.title')]
+    points = [span.text for span in driver.find_elements(By.CSS_SELECTOR, 'span.bolded-points')]
+    driver.quit()
 
+    total_names = len(names)
+    players_data = {}
+
+    for idx, name in enumerate(names):
+        print(f"Currently processing: {idx}/{total_names}")
+        player_data = extract_player_data(name, points, idx)
+        players_data[name] = player_data
+
+    save_to_csv(players_data)
+    print("Data saved to players_data.csv")
+
+if __name__ == "__main__":
+    # Setting up argument parsing
+    parser = argparse.ArgumentParser(description="Fetch volleyball player rankings from volleybox.net")
+    parser.add_argument('-w', '--women', action='store_true', help="Use the women's ranking URL")
+    args = parser.parse_args()
+
+    # Choose the URL based on the provided flag
+    url_to_use = URL_WOMEN if args.women else URL_MEN
+    
+    main(url_to_use)
