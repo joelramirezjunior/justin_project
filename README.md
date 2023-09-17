@@ -14,16 +14,15 @@
 ## Men
 Pearson Correlation Coefficients with 'Ranking':
 
-Weight (kg)    0.020951
-Height (cm)   -0.027348
-Spike (cm)    -0.097174
-Block (cm)    -0.021851
-Points        -0.861837
-Awards        -0.545644
-Matches       -0.252201
-Tournaments   -0.517341
-Position       0.022789
-Name: Ranking, dtype: float64
+- Weight (kg)    0.020951
+- Height (cm)   -0.027348
+- Spike (cm)    -0.097174
+- Block (cm)    -0.021851
+- Points        -0.861837
+- Awards        -0.545644
+- Matches       -0.252201
+- Tournaments   -0.517341
+- Position       0.022789
 
 Coefficient of Determination (R^2) with 'Ranking':
 
